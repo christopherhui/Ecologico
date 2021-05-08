@@ -24,7 +24,7 @@ const AuthorizationControls = ({ children }: { children: ReactElement | ReactEle
   const accesstoken = Cookies.get('accessToken')
 
   if (process.browser && !accesstoken) {
-    window.location.replace('/auth/login')
+    window.location.replace('/login')
   }
 
   const { loading } = useQuery(query, {
@@ -47,7 +47,7 @@ const AuthorizationControls = ({ children }: { children: ReactElement | ReactEle
     onError: () => {
       Cookies.remove('accessToken')
       globalAny.setNotification('error', 'Please login to continue.')
-      window.location.replace('/auth/login')
+      window.location.replace('/login')
     },
     pollInterval: 1000 * 60 * 4,
     notifyOnNetworkStatusChange: true
