@@ -1,9 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles'
 import { NextPage } from 'next'
 import { Typography, Input, Button, Link } from '@material-ui/core'
-import React, { ReactElement, useEffect, useState, MouseEvent } from 'react'
-import { auth } from '../middleware/firebase'
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
+import React, { ReactElement, useState, MouseEvent } from 'react'
+import { auth, firestore } from '../middleware/firebase'
 import { useRouter } from 'next/router'
 import NotAuthenticated from '../middleware/NotAuthenticated'
 
@@ -48,16 +47,25 @@ const Login: NextPage = (): ReactElement => {
   const classes = useStyles()
   const router = useRouter()
   const [name, setName] = useState('')
+  const [companyName, setCompanyName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
-  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth)
 
-  useEffect(() => {
-    if (user) {
-      router.push('/')
-    }
-  }, [user])
+  const createUser = () => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        firestore.collection('companies').add({
+          username: name,
+          name: companyName,
+          uid: user.user.uid
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   const redirectToSignin = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
@@ -83,6 +91,13 @@ const Login: NextPage = (): ReactElement => {
               className={classes.margin}
             />
             <Input
+              type='text'
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              placeholder='Company Name'
+              className={classes.margin}
+            />
+            <Input
               type='email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -103,12 +118,7 @@ const Login: NextPage = (): ReactElement => {
               placeholder='Password Confirmation'
               className={classes.margin}
             />
-            <Button
-              variant='contained'
-              color='secondary'
-              onClick={() => createUserWithEmailAndPassword(email, password)}
-              className={classes.margin}
-            >
+            <Button variant='contained' color='secondary' onClick={() => createUser()} className={classes.margin}>
               {'Sign Up'}
             </Button>
             <Link onClick={redirectToSignin}>{`Don't have an account? Sign up!`}</Link>
