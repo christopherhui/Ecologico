@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import { Typography, Input, Button } from '@material-ui/core'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { auth } from '../middleware/firebase'
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
 import NotAuthenticated from '../middleware/NotAuthenticated'
 
@@ -47,9 +47,11 @@ const useStyles = makeStyles((theme) => ({
 const Login: NextPage = (): ReactElement => {
   const classes = useStyles()
   const router = useRouter()
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth)
+  const [passwordConfirmation, setPasswordConfirmation] = useState('')
+  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth)
 
   useEffect(() => {
     if (user) {
@@ -65,9 +67,16 @@ const Login: NextPage = (): ReactElement => {
             <div className={classes.icon} />
           </div>
           <Typography color={'textPrimary'} variant={'h4'} className={classes.title}>
-            {'Login'}
+            {'Sign Up'}
           </Typography>
           <div className={classes.formInfo}>
+            <Input
+              type='text'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder='Username'
+              className={classes.margin}
+            />
             <Input
               type='email'
               value={email}
@@ -82,8 +91,19 @@ const Login: NextPage = (): ReactElement => {
               placeholder='Password'
               className={classes.margin}
             />
-            <Button variant='contained' color='primary' onClick={() => signInWithEmailAndPassword(email, password)}>
-              Log In
+            <Input
+              type='password'
+              value={passwordConfirmation}
+              onChange={(e) => setPasswordConfirmation(e.target.value)}
+              placeholder='Password Confirmation'
+              className={classes.margin}
+            />
+            <Button
+              variant='contained'
+              color='secondary'
+              onClick={() => createUserWithEmailAndPassword(email, password)}
+            >
+              {'Sign Up'}
             </Button>
           </div>
         </div>

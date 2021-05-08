@@ -1,11 +1,10 @@
 //eslint-disable-next-line
 const globalAny: any = global
 
-import React, { ReactElement, useState } from 'react'
-import Cookies from 'js-cookie'
-import { useQuery } from '@apollo/client'
+import React, { ReactElement } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
-import query from './query'
+import { auth } from '../middleware/firebase'
 import { Typography, makeStyles } from '@material-ui/core'
 import PaperContainer from '../components/PaperContainer'
 
@@ -18,40 +17,11 @@ const useStyles = makeStyles((theme) => ({
 
 const AuthorizationControls = ({ children }: { children: ReactElement | ReactElement[] }): ReactElement => {
   const classes = useStyles()
+  const [user, loading, error] = useAuthState(auth)
 
-  const [show, setShow] = useState(false)
-
-  const accesstoken = Cookies.get('accessToken')
-
-  if (process.browser && !accesstoken) {
+  if (process.browser && !loading && !user) {
     window.location.replace('/login')
   }
-
-  const { loading } = useQuery(query, {
-    errorPolicy: 'all',
-    onCompleted: (data) => {
-      const role = data?.user?.role
-
-      if (!data || !data?.user || !role) {
-        globalAny.setNotification('error', 'You are not authorized to access this area.')
-        Cookies.remove('accessToken')
-        return
-      }
-
-      if (data?.user?.token) {
-        Cookies.set('accessToken', data.user.token)
-      }
-
-      setShow(true)
-    },
-    onError: () => {
-      Cookies.remove('accessToken')
-      globalAny.setNotification('error', 'Please login to continue.')
-      window.location.replace('/login')
-    },
-    pollInterval: 1000 * 60 * 4,
-    notifyOnNetworkStatusChange: true
-  })
 
   if (loading) {
     return (
@@ -68,7 +38,7 @@ const AuthorizationControls = ({ children }: { children: ReactElement | ReactEle
     )
   }
 
-  if (show) {
+  if (user) {
     return <>{children}</>
   }
 
