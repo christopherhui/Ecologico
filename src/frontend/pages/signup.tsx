@@ -5,7 +5,8 @@ import React, { ReactElement, useState, MouseEvent } from 'react'
 import { auth, firestore } from '../middleware/firebase'
 import { useRouter } from 'next/router'
 import NotAuthenticated from '../middleware/NotAuthenticated'
-// import Logo from 'react-svg-loader!../public/static/logo.svg'
+// @ts-ignore
+import Logo from 'react-svg-loader!../public/static/logo.svg'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -104,7 +105,9 @@ const Login: NextPage = (): ReactElement => {
     <>
       <NotAuthenticated>
         <div className={classes.container}>
-          <div className={classes.title}>{/* <Logo /> */}</div>
+          <div className={classes.title}>
+            <Logo />
+          </div>
           <div className={classes.formInfo}>
             <TextField
               type='text'

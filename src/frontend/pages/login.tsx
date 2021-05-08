@@ -1,12 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles'
 import { NextPage } from 'next'
-import { Typography, Button, Link, TextField, InputProps } from '@material-ui/core'
+import { Input, Button, Link, TextField, InputProps } from '@material-ui/core'
 import React, { ReactElement, useEffect, useState, MouseEvent } from 'react'
 import { auth } from '../middleware/firebase'
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
 import NotAuthenticated from '../middleware/NotAuthenticated'
-// import Logo from 'react-svg-loader!../public/static/logo.svg'
+// @ts-ignore
+import Logo from 'react-svg-loader!../public/static/logo.svg'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -94,7 +95,9 @@ const Login: NextPage = (): ReactElement => {
     <>
       <NotAuthenticated>
         <div className={classes.container}>
-          <div className={classes.title}>{/* <Logo /> */}</div>
+          <div className={classes.title}>
+            <Logo />
+          </div>
           <div className={classes.formInfo}>
             <TextField
               type='email'
