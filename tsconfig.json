@@ -12,6 +12,5 @@
     "esModuleInterop": true,
     "baseUrl": "./src"
   },
-  "include": ["src/custom.d.ts"],
   "exclude": ["src/frontend"]
 }

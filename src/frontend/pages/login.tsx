@@ -6,7 +6,7 @@ import { auth } from '../middleware/firebase'
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
 import NotAuthenticated from '../middleware/NotAuthenticated'
-import Logo from 'react-svg-loader!../public/static/logo.svg'
+// import Logo from 'react-svg-loader!../public/static/logo.svg'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -94,9 +94,7 @@ const Login: NextPage = (): ReactElement => {
     <>
       <NotAuthenticated>
         <div className={classes.container}>
-          <div className={classes.title}>
-            <Logo />
-          </div>
+          <div className={classes.title}>{/* <Logo /> */}</div>
           <div className={classes.formInfo}>
             <TextField
               type='email'
