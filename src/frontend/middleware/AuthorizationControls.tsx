@@ -20,7 +20,7 @@ const AuthorizationControls = ({ children }: { children: ReactElement | ReactEle
   const [user, loading, error] = useAuthState(auth)
 
   if (process.browser && !loading && !user) {
-    window.location.replace('/login')
+    window.location.replace('/start')
   }
 
   if (loading) {

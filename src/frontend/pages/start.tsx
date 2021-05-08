@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles'
 import { NextPage } from 'next'
-import { Typography, Button, Link, TextField, InputProps } from '@material-ui/core'
+import { Typography, Input, Button, Link, TextField, InputProps } from '@material-ui/core'
 import React, { ReactElement, useEffect, useState, MouseEvent } from 'react'
 import { auth } from '../middleware/firebase'
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
@@ -16,13 +16,13 @@ const useStyles = makeStyles((theme) => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    padding: theme.spacing(10),
+    padding: theme.spacing(8),
     paddingTop: theme.spacing(5),
     paddingBottom: theme.spacing(5),
     background: '#FFFFFF',
     boxShadow: '0px 8px 40px rgba(0, 0, 0, 0.14)',
     borderRadius: '5px',
-    minWidth: theme.spacing(52)
+    minWidth: theme.spacing(42)
   },
   title: {
     display: 'flex',
@@ -55,40 +55,54 @@ const useStyles = makeStyles((theme) => ({
     filter: 'drop-shadow(0px 8px 50px rgba(0, 0, 0, 0.14))',
     marginBottom: theme.spacing(3),
     background: 'linear-gradient(90deg, #0BA360 0%, #3CBA92 100%)',
-    color: 'white'
+    color: 'white',
+    paddingRight: theme.spacing(8),
+    paddingBottom: theme.spacing(1.5),
+    paddingTop: theme.spacing(1.5),
+    paddingLeft: theme.spacing(8),
+    boxShadow: '0px 8px 50px 0px #00000024'
+  },
+  altbutton: {
+    background: '#FFFFFF',
+    border: '2px solid #0BA360',
+    boxSizing: 'border-box',
+    boxShadow: '0px 8px 40px rgba(0, 0, 0, 0.14)',
+    borderRadius: '8px',
+    color: '#0BA360',
+    paddingRight: theme.spacing(4),
+    paddingBottom: theme.spacing(1.25),
+    paddingTop: theme.spacing(1.25),
+    paddingLeft: theme.spacing(4)
+  },
+  welcome: {
+    display: 'flex',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  name: {
+    display: 'flex',
+    alignItems: 'center',
+    textAlign: 'center',
+    color: '#000000',
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(2)
+  },
+  center: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column'
+  },
+  options: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    marginTop: theme.spacing(3)
   }
 }))
 
 const Login: NextPage = (): ReactElement => {
   const classes = useStyles()
   const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth)
-
-  useEffect(() => {
-    if (user) {
-      router.push('/')
-    }
-  }, [user])
-
-  const redirectToSignup = (e: MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    router.push('/signup')
-  }
-
-  const inputStyle: Partial<InputProps> = {
-    style: {
-      fontWeight: 'bold',
-      display: 'flex',
-      alignItems: 'center',
-      textAlign: 'center',
-      justifyContent: 'center',
-      color: '#000000',
-      marginLeft: '15px',
-      marginRight: '15px'
-    }
-  }
 
   return (
     <>
@@ -97,32 +111,34 @@ const Login: NextPage = (): ReactElement => {
           <div className={classes.title}>
             <Logo />
           </div>
-          <div className={classes.formInfo}>
-            <TextField
-              type='email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder='Email'
-              className={classes.input}
-              InputProps={inputStyle}
-            />
-            <TextField
-              type='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder='Password'
-              className={classes.input}
-              InputProps={inputStyle}
-            />
+          <div className={classes.center}>
+            <Typography variant='h3' component='h3' className={classes.welcome}>
+              {'Welcome to'}
+            </Typography>
+            <Typography variant='h3' component='h3' className={classes.name}>
+              {'ECOLOGICO!'}
+            </Typography>
+            <Typography variant='h4' component='h4' className={classes.welcome}>
+              {'Ready to start making better choices for your enterprise?'}
+            </Typography>
+          </div>
+          <div className={classes.options}>
             <Button
               variant='contained'
               color='primary'
-              onClick={() => signInWithEmailAndPassword(email, password)}
+              onClick={() => router.push('/login')}
               className={classes.button}
             >
               {'Log In'}
             </Button>
-            <Link onClick={redirectToSignup}>{`Don't have an account? Sign up!`}</Link>
+            <Button
+              variant='contained'
+              color='secondary'
+              onClick={() => router.push('/signup')}
+              className={classes.altbutton}
+            >
+              {'Sign up'}
+            </Button>
           </div>
         </div>
       </NotAuthenticated>
