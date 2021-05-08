@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles'
 import { NextPage } from 'next'
-import { Typography, Input, Button } from '@material-ui/core'
-import React, { ReactElement, useEffect, useState } from 'react'
+import { Typography, Input, Button, Link } from '@material-ui/core'
+import React, { ReactElement, useEffect, useState, MouseEvent } from 'react'
 import { auth } from '../middleware/firebase'
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
@@ -57,6 +57,11 @@ const Login: NextPage = (): ReactElement => {
     }
   }, [user])
 
+  const redirectToSignup = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    router.push('/signup')
+  }
+
   return (
     <>
       <NotAuthenticated>
@@ -82,9 +87,15 @@ const Login: NextPage = (): ReactElement => {
               placeholder='Password'
               className={classes.margin}
             />
-            <Button variant='contained' color='primary' onClick={() => signInWithEmailAndPassword(email, password)}>
-              Log In
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={() => signInWithEmailAndPassword(email, password)}
+              className={classes.margin}
+            >
+              {'Log In'}
             </Button>
+            <Link onClick={redirectToSignup}>{`Don't have an account? Sign up!`}</Link>
           </div>
         </div>
       </NotAuthenticated>
