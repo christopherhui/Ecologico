@@ -44,7 +44,6 @@ if (process.env.NODE_ENV) {
         defaultSrc: ["'none'"],
         fontSrc: ["'self'", 'data:', 'https:'],
         imgSrc: ["'self'", 'data:', 'https:'],
-        connectSrc: ["'self'"],
         scriptSrc,
         styleSrc
       }
