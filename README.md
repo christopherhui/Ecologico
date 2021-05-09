@@ -1,43 +1,22 @@
 # Ecologico
 
-This boilerplate contains the common code of Dashboard Labs' fullstack stack which includes the following:
+## Inspiration
+We were thinking about how we could help combat climate change and brainstormed many topics in this problem space. Every topic ultimately left us feeling powerless as we realized that most existing apps out there revolve around telling individuals how they can be better. However, corporations & other enterprises are the real reason we are facing a climate crisis, so we wanted to build something that addresses this fact.
 
-- Apollo GraphQL Service
-- Express Server
-- NextJS
-- Material UI
+## What it does
+Our web app, Ecologico, helps enterprises to be more eco-friendly. It does this by offering a variety of questionnaires on systems and processes they may be using that consume energy or cause pollution. Then, once the app understands what the company is currently using, it provides suggestions on better products they could install or more efficient processes they could implement.
 
-This project also has configurations for deploying on Google Cloud Run through Google Cloud Build and is easily deployable on a service like Heroku.
+## How we built it
+We created a web application using React Typescript with Firebase as being our backend to store company information regarding product recommendations that they have been given. We also built an API with Express to scrape sustainable, energy-efficient products' data and integrated it with SendGrid to send product recommendations through email once a questionnaire has been filled out. Deployed on Heroku and served the domain through domain.com.
 
-## Why the suggestion to unify backend and frontend?
+## Challenges we ran into
+Finding recommendation systems for given inputs from the questionnaires is incredibly difficult. There aren't many libraries out there including the sponsors that can provide this information. Being able to complete questionnaires depends on the amount of time we have to create these forms. A lot of time beyond the hackathon needs to be done if we want to have forms for many categories.
 
-- Unify types in typescript (no need to update types on both repos)
-- Singular build and deployment pipeline (lessens devops time)
-- Singular setup for coding and managing issues
-- Removes unnecessary NextJS configuration
+## Accomplishments that we're proud of
+Completing 6 pages of our frontend and having our hardworking UX designers create such amazing designs under the 24-hour mark is a feat I don't think I would ever think was possible.
 
-## What do I need to learn to use this template?
+## What we learned
+A lot of cool technologies along the way! There were so many different libraries that helped support our needs and being able to understand more about the entrepreneurial aspects of creating an organization helped made our project much easier to understand.
 
-- `npm install` installs all necessary dependencies
-- `npm run dev` runs the server in DEV MODE
-- `npm run build` builds the server
-- `npm start` starts the server in PRODUCTION MODE
-
-Server will be running on PORT 3000 unless otherwise specified (through the PORT environment variable).
-
-## Where can I access my GraphQL endpoint? 
-
-Go to `/graphql`. The GraphQL Playground is accessible on DEV mode only for security reasons.
-
-## Project Setup
-
-Once you're convinced, to use this boilerplate, click on the "Use this template" button on the repo page or click on <a href="https://github.com/dashboardphilippines/boilerplate-fullstack/generate">this link</a>.
-
-## Installation for Code Quality Tools
-
-This repository also contains the following features for proper code quality:
-
-- <a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint">ESLint</a>
-- <a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode">Prettier</a>
-
-In addition, this repository also has a VS Code configuration to lint the code on each save and before each commit. Please install the following plugins above.
+## What's next for Ecologico
+We have lots of ideas on how we could grow the app's functionalities. For one, finding more data to add additional categories would be an obvious first step; we would spend more time researching or find additional APIs to implement. Coming up with a realistic revenue model would allow us to monetize the app and keep growing. Also, creating incentives for companies to use this app would make it much more helpful - this could be through partnerships with governments & other powerful bodies to get funding for companies, or through growing public knowledge of the app so that enterprises are pressured to do better. Of course, we could add a ton of features that just weren't possible in 24 hours, but we are happy with what we were able to create at this time!
