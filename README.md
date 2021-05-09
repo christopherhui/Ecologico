@@ -1,4 +1,4 @@
-# Fullstack Project Boilerplate Code
+# Ecologlico
 
 This boilerplate contains the common code of Dashboard Labs' fullstack stack which includes the following:
 
