@@ -28,7 +28,8 @@ const scriptSrc = [
   'www.gstatic.com',
   '*.googleapis.com',
   'https://www.google-analytics.com/analytics.js',
-  'https://www.googletagmanager.com/gtag/js'
+  'https://www.googletagmanager.com/gtag/js',
+  'http://xxxx'
 ]
 
 const styleSrc = ["'self'", "'unsafe-inline'", 'www.gstatic.com', '*.googleapis.com']
