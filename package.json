@@ -47,6 +47,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/styles": "^4.11.3",
     "apollo-server-express": "^2.22.2",
+    "bootstrap": "^5.0.0",
     "classnames": "^2.2.6",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
@@ -60,8 +61,10 @@
     "jsonwebtoken": "^8.5.1",
     "next": "^10.1.2",
     "react": "^17.0.2",
+    "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2",
     "react-firebase-hooks": "^3.0.4",
+    "react-material-ui-carousel": "^2.2.6",
     "react-svg-loader": "^3.0.3"
   }
 }
