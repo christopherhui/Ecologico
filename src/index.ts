@@ -34,21 +34,25 @@ const scriptSrc = [
 const styleSrc = ["'self'", "'unsafe-inline'", 'www.gstatic.com', '*.googleapis.com']
 
 if (process.env.NODE_ENV) {
-  app.use(helmet())
-  app.use(helmet.frameguard({ action: 'deny' }))
-  app.use(helmet.referrerPolicy({ policy: 'same-origin' }))
   app.use(
-    helmet.contentSecurityPolicy({
-      directives: {
-        defaultSrc: ["'self'"],
-        fontSrc: ["'self'", 'data:', 'https:'],
-        imgSrc: ["'self'", 'data:', 'https:'],
-        connectSrc: ["'self'"],
-        scriptSrc,
-        styleSrc
-      }
+    helmet({
+      contentSecurityPolicy: false
     })
   )
+  app.use(helmet.frameguard({ action: 'deny' }))
+  app.use(helmet.referrerPolicy({ policy: 'same-origin' }))
+  // app.use(
+  //   helmet.contentSecurityPolicy({
+  //     directives: {
+  //       defaultSrc: ["'self'"],
+  //       fontSrc: ["'self'", 'data:', 'https:'],
+  //       imgSrc: ["'self'", 'data:', 'https:'],
+  //       connectSrc: ["'self'"],
+  //       scriptSrc,
+  //       styleSrc
+  //     }
+  //   })
+  // )
 }
 
 nextJSApp.prepare().then(() => {
