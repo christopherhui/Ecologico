@@ -15,10 +15,18 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'start',
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    background: 'white',
+    paddingLeft: '6px',
+    paddingTop: '5px',
+    paddingBottom: '5px',
+    borderRadius: '3px'
   },
   textInput: {
     marginRight: theme.spacing()
+  },
+  noborder: {
+    borderStyle: 'none'
   }
 }))
 
@@ -56,6 +64,7 @@ const Search = ({
         }}
         onKeyDown={onKeyDown}
         InputProps={{
+          classes: { notchedOutline: classes.noborder },
           onBlur: onBlur ? onBlur : null,
           onKeyDown: (e): void => {
             if (onBlur && e.keyCode === 13) {

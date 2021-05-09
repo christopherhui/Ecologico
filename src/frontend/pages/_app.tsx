@@ -10,7 +10,6 @@ import ThemeProvider from '@material-ui/styles/ThemeProvider'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import darkTheme from '../themes/darkTheme'
-import theme from '../themes/theme'
 import home from '../themes/home'
 
 import { ApolloProvider } from '@apollo/client'
@@ -42,7 +41,7 @@ class MyApp extends App {
           <title>{'Ecologico'}</title>
           <meta name={'viewport'} content={'minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no'} />
         </Head>
-        <ThemeProvider theme={globalAny.darkTheme ? darkTheme : theme}>
+        <ThemeProvider theme={globalAny.darkTheme ? darkTheme : home}>
           <CssBaseline />
           <ApolloProvider client={client}>
             <Component {...pageProps} />
