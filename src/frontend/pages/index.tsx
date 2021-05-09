@@ -149,6 +149,7 @@ const Home: NextPage = (): ReactElement => {
   }, [user])
 
   const setHistoryDropdown = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
     setHistory(true)
     setPerson(false)
   }
@@ -157,6 +158,10 @@ const Home: NextPage = (): ReactElement => {
     setAnchorEl(event.currentTarget)
     setPerson(true)
     setHistory(false)
+  }
+
+  const signOut = (event: React.MouseEvent<HTMLElement>) => {
+    auth.signOut()
   }
 
   return (
@@ -253,7 +258,7 @@ const Home: NextPage = (): ReactElement => {
                       marginTop: '0.5em'
                     }}
                   />
-                  <MenuItem>
+                  <MenuItem onClick={signOut}>
                     <ListItemIcon>
                       <ExitToAppIcon fontSize='small' style={{ color: '#717171' }} />
                     </ListItemIcon>
