@@ -137,17 +137,17 @@ const Home: NextPage = (): ReactElement => {
   const [history, setHistory] = useState(false)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [state, setState] = React.useState({
-    gilad: false,
-    jason: false,
-    antoine: false,
-    who: false,
-    drwho: false
+    led: false,
+    halogen: false,
+    fl: false,
+    incan: false,
+    solar: false
   })
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [event.target.name]: event.target.checked })
   }
 
-  const { gilad, jason, antoine, who, drwho } = state
+  const { led, halogen, fl, incan, solar } = state
 
   useEffect(() => {
     if (!loading && user) {
@@ -180,6 +180,21 @@ const Home: NextPage = (): ReactElement => {
     auth.signOut()
   }
 
+  const handleSubmit = () => {
+    const API_URL = 'https://sustainable-products-api.herokuapp.com/lighting'
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ led: led, email: user.email })
+    })
+
+    router.push('/result')
+  }
+
   return (
     <>
       <AuthorizationControls>
@@ -202,23 +217,23 @@ const Home: NextPage = (): ReactElement => {
                 <FormControl component='fieldset' className={classes.formControl}>
                   <FormGroup>
                     <FormControlLabel
-                      control={<Checkbox checked={gilad} onChange={handleChange} name='gilad' color='primary' />}
+                      control={<Checkbox checked={led} onChange={handleChange} name='led' color='primary' />}
                       label='LED'
                     />
                     <FormControlLabel
-                      control={<Checkbox checked={jason} onChange={handleChange} name='jason' color='primary' />}
+                      control={<Checkbox checked={halogen} onChange={handleChange} name='halogen' color='primary' />}
                       label='Halogen'
                     />
                     <FormControlLabel
-                      control={<Checkbox checked={antoine} onChange={handleChange} name='antoine' color='primary' />}
+                      control={<Checkbox checked={fl} onChange={handleChange} name='fl' color='primary' />}
                       label='Fluorescent'
                     />
                     <FormControlLabel
-                      control={<Checkbox checked={who} onChange={handleChange} name='who' color='primary' />}
+                      control={<Checkbox checked={incan} onChange={handleChange} name='incan' color='primary' />}
                       label='Incandescent'
                     />
                     <FormControlLabel
-                      control={<Checkbox checked={drwho} onChange={handleChange} name='drwho' color='primary' />}
+                      control={<Checkbox checked={solar} onChange={handleChange} name='solar' color='primary' />}
                       label='Outdoor solar'
                     />
                   </FormGroup>
@@ -232,12 +247,7 @@ const Home: NextPage = (): ReactElement => {
                 </Typography>
                 <Input className={classes.total} />
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={() => router.push('/result')}
-                    className={classes.button}
-                  >
+                  <Button variant='contained' color='primary' onClick={handleSubmit} className={classes.button}>
                     {'Submit'}
                   </Button>
                 </div>
