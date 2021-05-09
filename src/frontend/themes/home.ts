@@ -6,7 +6,7 @@ export default createMuiTheme({
     MuiCssBaseline: {
       '@global': {
         body: {
-          background: 'linear-gradient(215.45deg, rgba(11, 163, 96, 0.25) 9.1%, rgba(227, 255, 214, 0.125) 39.7%)',
+          background: 'white',
           backgroundRepeat: 'space',
           backgroundAttachment: 'fixed'
         }

@@ -15,6 +15,9 @@ import HelpIcon from '@material-ui/icons/Help'
 import FeedbackIcon from '@material-ui/icons/Feedback'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 
+// @ts-ignore
+import Chat from 'react-svg-loader!../public/static/chat.svg'
+
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: theme.spacing(164),
@@ -62,7 +65,29 @@ const useStyles = makeStyles((theme) => ({
   descr: { color: 'white', position: 'absolute', left: '1.4em', bottom: '3.4em' },
   icons: { marginTop: '16px' },
   signout: { color: '#717171' },
-  dropname: { textAlign: 'center', textTransform: 'uppercase' }
+  dropname: { textAlign: 'center', textTransform: 'uppercase' },
+  oneBackground: {
+    background: 'linear-gradient(215.45deg, rgba(141, 231, 108, 0.125) 9.1%, rgba(227, 255, 214, 0.125) 39.7%)',
+    boxShadow: '0px 4px 50px rgba(199, 240, 184, 0.3)',
+    width: '100%',
+    height: '100%',
+    position: 'fixed',
+    top: '0px',
+    zIndex: -1
+  },
+  anotherBackground: {
+    background: 'linear-gradient(204.38deg, rgba(244, 255, 239, 0.25) 45.96%, rgba(164, 240, 136, 0.25) 79.24%)',
+    width: '100%',
+    height: '100%',
+    position: 'fixed',
+    bottom: '0px',
+    zIndex: -1
+  },
+  chat: {
+    position: 'fixed',
+    bottom: theme.spacing(4),
+    right: theme.spacing(4)
+  }
 }))
 
 const Home: NextPage = (): ReactElement => {
@@ -238,6 +263,13 @@ const Home: NextPage = (): ReactElement => {
               </div>
             </Grid>
           </Grid>
+        </div>
+        <div className={classes.oneBackground} />
+        <div className={classes.anotherBackground} />
+        <div className={classes.chat}>
+          <IconButton>
+            <Chat />
+          </IconButton>
         </div>
       </AuthorizationControls>
     </>
