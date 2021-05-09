@@ -15,6 +15,14 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import HelpIcon from '@material-ui/icons/Help'
 import FeedbackIcon from '@material-ui/icons/Feedback'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+
+import Input from '@material-ui/core/Input'
+import FormControl from '@material-ui/core/FormControl'
+import FormGroup from '@material-ui/core/FormGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import Button from '@material-ui/core/Button'
 
 // @ts-ignore
 import Chat from 'react-svg-loader!../public/static/chat.svg'
@@ -33,11 +41,14 @@ const useStyles = makeStyles((theme) => ({
     background: '#FFFFFF',
     boxShadow: '0px 8px 40px rgba(0, 0, 0, 0.14)',
     borderRadius: '9px',
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
+    maxHeight: '550px',
+    overflowY: 'scroll'
   },
   desc: {
-    fontSize: '15px',
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(0.5),
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(4.5)
   },
   products: {
     marginTop: theme.spacing(3),
@@ -89,52 +100,54 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     bottom: theme.spacing(4),
     right: theme.spacing(4)
+  },
+  ques: {
+    fontSize: '20px',
+    marginTop: theme.spacing(1)
+  },
+  formControl: {
+    margin: theme.spacing(2),
+    marginLeft: theme.spacing(3)
+  },
+  total: {
+    marginTop: theme.spacing(2),
+    width: '50%',
+    marginBottom: theme.spacing(2)
+  },
+  button: {
+    filter: 'drop-shadow(0px 8px 50px rgba(0, 0, 0, 0.14))',
+    background: 'linear-gradient(90deg, #0BA360 0%, #3CBA92 100%)',
+    color: 'white',
+    marginBottom: '2em',
+    marginTop: '2em',
+    paddingRight: theme.spacing(6),
+    paddingBottom: theme.spacing(1),
+    paddingTop: theme.spacing(1),
+    paddingLeft: theme.spacing(6)
   }
 }))
 
 const Home: NextPage = (): ReactElement => {
   const classes = useStyles()
   const router = useRouter()
-  const [searchText, setSearchText] = useState<string>()
   const [user, loading, error] = useAuthState(auth)
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
-  const [history, setHistory] = useState(false)
   const [person, setPerson] = useState(false)
+  const [history, setHistory] = useState(false)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const [state, setState] = React.useState({
+    gilad: false,
+    jason: false,
+    antoine: false,
+    who: false,
+    drwho: false
+  })
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ ...state, [event.target.name]: event.target.checked })
+  }
 
-  const [currentProducts, setCurrentProducts] = useState([
-    {
-      name: 'Lighting',
-      desc: 'Improve your...',
-      bgk:
-        'https://cdn.discordapp.com/attachments/839645188154720266/840717212242280478/max-malax-rHKMXPJgSl4-unsplash.jpg',
-      width: '400px',
-      height: '288px'
-    },
-    {
-      name: 'Packaging',
-      desc: 'Reduce waste in...',
-      bgk: 'https://cdn.discordapp.com/attachments/839645188154720266/840716676495704064/Packaging.jpg',
-      width: '600px',
-      height: '388px'
-    },
-    {
-      name: 'Electricity',
-      desc: 'Provide better...',
-      bgk:
-        'https://cdn.discordapp.com/attachments/839645188154720266/840716731197423636/sigmund-r9PeXDCJyEw-unsplash.jpg',
-      width: '500px',
-      height: '388px'
-    },
-    {
-      name: 'Architecture',
-      desc: 'Improve the use of...',
-      bgk: 'https://cdn.discordapp.com/attachments/839645188154720266/840722744882364516/Natural_light.png',
-      width: '500px',
-      height: '388px'
-    }
-  ])
+  const { gilad, jason, antoine, who, drwho } = state
 
   useEffect(() => {
     if (!loading && user) {
@@ -173,37 +186,61 @@ const Home: NextPage = (): ReactElement => {
         <div className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={9}>
-              <Search searchText={searchText} setSearchText={(string: string) => setSearchText(string)} />
+              <IconButton onClick={() => router.push('/')}>
+                <ArrowBackIcon style={{ fontSize: 50, color: '#474747' }} />
+              </IconButton>
               <div className={classes.title}>
                 <Typography color={'textPrimary'} variant={'h4'}>
-                  {`Welcome Back, `}
-                  <span className={classes.comp}>{`${name}!`}</span>
+                  {`Improve your...`}
                 </Typography>
-                <Typography color={'textPrimary'} variant={'h5'} className={classes.desc}>
-                  {`Check out these questionnaires for you to fill out and improve your business operations!`}
+                <Typography color={'textPrimary'} variant={'h3'} className={classes.desc}>
+                  {`Lighting`}
                 </Typography>
-              </div>
-              <div className={classes.products}>
-                {currentProducts.map((product, index) => (
-                  <div
-                    className={classes.product}
-                    style={{
-                      backgroundImage: `url(${product.bgk})`,
-                      backgroundSize: `${product.width} ${product.height}`,
-                      cursor: 'pointer',
-                      boxShadow: '0px 4px 50px rgba(199, 240, 184, 0.3)'
-                    }}
-                    key={index}
-                    onClick={() => router.push('/form')}
+                <Typography color={'textPrimary'} variant={'h5'} className={classes.ques}>
+                  {`What types of lighting do you currently use in your workplace?`}
+                </Typography>
+                <FormControl component='fieldset' className={classes.formControl}>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Checkbox checked={gilad} onChange={handleChange} name='gilad' color='primary' />}
+                      label='LED'
+                    />
+                    <FormControlLabel
+                      control={<Checkbox checked={jason} onChange={handleChange} name='jason' color='primary' />}
+                      label='Halogen'
+                    />
+                    <FormControlLabel
+                      control={<Checkbox checked={antoine} onChange={handleChange} name='antoine' color='primary' />}
+                      label='Fluorescent'
+                    />
+                    <FormControlLabel
+                      control={<Checkbox checked={who} onChange={handleChange} name='who' color='primary' />}
+                      label='Incandescent'
+                    />
+                    <FormControlLabel
+                      control={<Checkbox checked={drwho} onChange={handleChange} name='drwho' color='primary' />}
+                      label='Outdoor solar'
+                    />
+                  </FormGroup>
+                </FormControl>
+                <Typography color={'textPrimary'} variant={'h5'} className={classes.ques}>
+                  {`How many lighting fixtures are used in total?`}
+                </Typography>
+                <Input className={classes.total} />
+                <Typography color={'textPrimary'} variant={'h5'} className={classes.ques}>
+                  {`What are your annual costs associated with lighting?`}
+                </Typography>
+                <Input className={classes.total} />
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={() => router.push('/result')}
+                    className={classes.button}
                   >
-                    <Typography color={'textPrimary'} variant={'h5'} className={classes.descr}>
-                      {`${product.desc}`}
-                    </Typography>
-                    <Typography color={'textPrimary'} variant={'h3'} className={classes.names}>
-                      {`${product.name}`}
-                    </Typography>
-                  </div>
-                ))}
+                    {'Submit'}
+                  </Button>
+                </div>
               </div>
             </Grid>
             <Grid item xs={3}>
